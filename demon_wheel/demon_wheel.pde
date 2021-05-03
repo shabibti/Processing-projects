@@ -5,15 +5,14 @@ float phase = 0;
 float phase_increment = 2*PI/100;
 float rotation_rate = .10;
 float num_waves = 20;
-
-//int frame_count = 0;
+float hue = 200;
 
 void setup()
 {
-  size(500, 500);
+  size(500, 500, P2D);
   background(0);
-  colorMode(RGB,100);
-  stroke(100,100,100);
+  colorMode(HSB,360,1,1,1);
+  stroke(0,1,1);
   strokeWeight(1.25);
   noFill();
 }
@@ -22,20 +21,19 @@ void draw()
 {
   background(0,0,0);
   translate(250, 250);
-  stroke(100,100,100);
+  stroke(0,0,1);
   for (int j = 0; j < num_waves; j++)
   {
     drawSineWave(((float) j) * (2*PI/(num_waves*rotation_rate)), -1);
     drawCosWave(((float) j) * (2*PI/(num_waves*rotation_rate)), 1);
   }
-  stroke(100,100,100);
+  stroke(hue,1,1);
   circle(0,0,2*num_point);
   phase += phase_increment;
   
-  //if (frame_count<100)
+  //if (frameCount<100)
   //{
-  //  save("frames/frame"+nf(frame_count,6)+".png");
-  //  frame_count++; 
+  //  save("frames/frame"+nf(frameCount,6)+".png");
   //}
 }
 
@@ -48,6 +46,7 @@ void drawSineWave(float offset, float sign)
   beginShape();
   for (int i = 0; i < num_point; i++)
   {
+    stroke(hue,1,1,pow((num_point - (float) i)/num_point,2));
     curveVertex(i, (sqrt((float) i))*amplitude*sin(frequency*i + phase));
   }
   endShape();
@@ -64,6 +63,7 @@ void drawCosWave(float offset, float sign)
   beginShape();
   for (int i = 0; i < num_point; i++)
   {
+    stroke(hue,1,1,pow((num_point - (float) i)/num_point,2));
     curveVertex(i, (sqrt((float) i))*amplitude*sin(frequency*i + phase + PI));
   }
   endShape();
